@@ -25,24 +25,31 @@ function PresentationPage(){
 
 
 
-    const slides = Object.entries(images)
+const slides = Object.entries(images)
 
-        .filter(([path]) =>
+    .filter(([path]) =>
+        path.includes(`/presentations/${folder}/`)
+    )
 
-            path.includes(
-                `/presentations/${folder}/`
-            )
+    .sort(([pathA], [pathB]) => {
 
-        )
+        const fileA = pathA.split("/").pop() || "";
+        const fileB = pathB.split("/").pop() || "";
 
+        const numA = parseInt(fileA.match(/\d+/)?.[0] || "0", 10);
+        const numB = parseInt(fileB.match(/\d+/)?.[0] || "0", 10);
 
-        .map(([_, url], index) => ({
+        return numA - numB;
 
-            id: index,
+    })
 
-            image: url as string
+    .map(([_, url], index) => ({
 
-        }));
+        id: index,
+
+        image: url as string
+
+    }));
 
 
 
